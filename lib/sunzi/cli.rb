@@ -1,5 +1,5 @@
 require 'open3'
-require 'ostruct'
+require 'recursive-open-struct'
 require 'net/ssh'
 
 module Sunzi
@@ -153,7 +153,7 @@ module Sunzi
       end
 
       def copy_local_files(config, copy_or_template)
-        @attributes = OpenStruct.new(config['attributes'])
+        @attributes = RecursiveOpenStruct.new(config['attributes'])
         files = Dir['{recipes,roles,files}/**/*'].select { |file| File.file?(file) }
         files.each { |file| send copy_or_template, File.expand_path(file), File.expand_path("compiled/#{file}") }
 
